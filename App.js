@@ -14,6 +14,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <NativeBaseProvider>
+        <StatusBar style="auto" />
         <Drawer.Navigator
           initialRouteName="Tasks"
           screenOptions={{
