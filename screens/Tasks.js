@@ -1,19 +1,32 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import React, { useCallback } from "react";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Keyboard,
+  TextInput,
+  KeyboardAvoidingView
+} from "react-native";
+import React, { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NativeBaseProvider, useColorMode } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import COLORS from "../theme/theme";
 import NavBar from "../components/NavBar";
 import bg_img from "../assets/bg_img.png";
-import ModeSwitch from "../components/mode-switch";
+import TaskList from "../components/TaskList";
+import { Ionicons } from "@expo/vector-icons";
+import { initTasks } from "../components/initTasks";
 
 const Tasks = () => {
   const { colorMode } = useColorMode();
   const navigation = useNavigation();
+  const [tasks, setTasks] = useState(initTasks);
+  const [taskInput, setTaskInput] = useState(null);
 
   // theme colors
   const bgTask = colorMode === "dark" ? COLORS.dark : COLORS.white;
+  const textColor = colorMode === "dark" ? COLORS.white : COLORS.dark;
   // console.log(bgTask);
 
   const handleMenuButton = useCallback(
@@ -23,6 +36,24 @@ const Tasks = () => {
     [navigation]
   );
 
+  const handleAddTask = () => {
+    Keyboard.dismiss();
+    const maxKeyValue = Math.max(...tasks.map(obj => parseInt(obj.key)));
+    // console.log(maxKeyValue);
+    if (taskInput === null) {
+      console.log("error");
+    } else {
+      const newTask = {
+        key: maxKeyValue + 1,
+        task: taskInput,
+        done: false
+      };
+      // console.log(newTask);
+      setTasks([newTask, ...tasks]);
+      setTaskInput(null);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.NavBar}>
@@ -30,8 +61,28 @@ const Tasks = () => {
       </View>
       <Image source={bg_img} style={styles.img} />
       <View style={[styles.taskContainer, { backgroundColor: bgTask }]}>
-        <ModeSwitch />
+        <TaskList tasks={tasks} setTasks={setTasks} />
       </View>
+      <KeyboardAvoidingView style={styles.addTask}>
+        <TextInput
+          placeholder="Add a new task"
+          placeholderTextColor={COLORS.dark}
+          value={taskInput}
+          onChangeText={text => setTaskInput(text)}
+          style={[
+            styles.inputText,
+            { backgroundColor: COLORS.white, color: textColor }
+          ]}
+        />
+        <View style={styles.addButton}>
+          <Ionicons
+            name="add-circle"
+            size={50}
+            color={COLORS.primary}
+            onPress={handleAddTask}
+          />
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -51,7 +102,6 @@ const styles = StyleSheet.create({
     left: 20
   },
   taskContainer: {
-    flexGrow: 1,
     position: "absolute",
     bottom: 0,
     left: 0,
@@ -59,7 +109,9 @@ const styles = StyleSheet.create({
     top: 323,
     borderTopLeftRadius: 22,
     borderTopRightRadius: 22,
-    paddingTop: 20
+    paddingTop: 25,
+    paddingBottom: 70,
+    paddingHorizontal: 20
   },
   img: {
     height: 340,
@@ -67,5 +119,23 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     marginLeft: 25,
     marginTop: 42
+  },
+  addTask: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    position: "absolute",
+    right: 0,
+    bottom: 10,
+    paddingRight: 20
+  },
+  addButton: {},
+  inputText: {
+    width: "80%",
+    height: "80%",
+    borderRadius: 60,
+    borderColor: COLORS.gray,
+    borderWidth: 2,
+    paddingHorizontal: 15
   }
 });

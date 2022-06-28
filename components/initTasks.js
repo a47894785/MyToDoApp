@@ -1,0 +1,53 @@
+export const initTasks = [{
+  key: "1",
+  task: "item1",
+  done: true,
+}, {
+  key: "2",
+  task: "item2",
+  done: false,
+}, {
+  key: "3",
+  task: "item3",
+  done: false,
+}, {
+  key: "4",
+  task: "item4",
+  done: false,
+}, {
+  key: "5",
+  task: "item5",
+  done: false,
+}, {
+  key: "6",
+  task: "item6",
+  done: false,
+}, {
+  key: "7",
+  task: "item7",
+  done: false,
+}, {
+  key: "8",
+  task: "item8",
+  done: false,
+}, {
+  key: "9",
+  task: 'item9',
+  done: false,
+}, {
+  key: "10",
+  task: 'item10',
+  done: false,
+}, {
+  key: "11",
+  task: "item11",
+  done: false,
+}, {
+  key: "12",
+  task: "item12",
+  done: false,
+}, {
+  key: "13",
+  task: "item13",
+  done: false,
+}]
