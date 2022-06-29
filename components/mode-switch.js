@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet, StatusBar } from "react-native";
 import { useColorMode, Switch } from "native-base";
 import COLORS from "../theme/theme";
+import { Feather } from "@expo/vector-icons";
 
 export default function ModeSwitch() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -17,17 +18,27 @@ export default function ModeSwitch() {
   return (
     <View style={styles.switchContainer}>
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
-      <Text style={[styles.switchText, { color: textColor, paddingLeft: 35 }]}>
-        Light
-      </Text>
+      <Feather
+        name="sun"
+        size={20}
+        color={textColor}
+        style={{
+          paddingLeft: 55
+        }}
+      />
       <Switch
         defaultIsChecked={isDarkMode}
         value={isDarkMode}
         onValueChange={toggleSwitch}
       />
-      <Text style={[styles.switchText, { color: textColor, paddingLeft: 8 }]}>
-        Dark
-      </Text>
+      <Feather
+        name="moon"
+        size={20}
+        color={textColor}
+        style={{
+          paddingLeft: 8
+        }}
+      />
     </View>
   );
 }
@@ -35,8 +46,9 @@ export default function ModeSwitch() {
 const styles = StyleSheet.create({
   switchContainer: {
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginBottom: 20
   },
   switchText: {
     fontSize: 16,

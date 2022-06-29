@@ -8,6 +8,7 @@ import { StatusBar } from "expo-status-bar";
 import COLORS from "../theme/theme";
 import Tasks from "../screens/Tasks";
 import About from "../screens/About";
+import CustomDrawer from "./CustomDrawer";
 
 const Drawer = createDrawerNavigator();
 
@@ -18,10 +19,10 @@ const Route = () => {
         <StatusBar style="auto" />
         <Drawer.Navigator
           initialRouteName="Tasks"
+          drawerContent={props => <CustomDrawer {...props} />}
           screenOptions={{
             drawerStyle: {
-              width: "65%",
-              backgroundColor: COLORS.primaryVariant
+              width: "65%"
             },
             drawerType: "back",
             overlayColor: "transparent",
