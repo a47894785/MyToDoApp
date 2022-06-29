@@ -66,12 +66,12 @@ const Tasks = () => {
       <KeyboardAvoidingView style={styles.addTask}>
         <TextInput
           placeholder="Add a new task"
-          placeholderTextColor={COLORS.dark}
+          placeholderTextColor={COLORS.gray}
           value={taskInput}
           onChangeText={text => setTaskInput(text)}
           style={[
             styles.inputText,
-            { backgroundColor: COLORS.white, color: textColor }
+            { backgroundColor: bgTask, color: textColor }
           ]}
         />
         <View style={styles.addButton}>

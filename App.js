@@ -1,18 +1,50 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { NativeBaseProvider } from "native-base";
+import React, { useState, useEffect, useCallback } from "react";
+import * as SplashScreen from "expo-splash-screen";
 
 import COLORS from "./theme/theme";
-import Tasks from "./screens/Tasks";
-import About from "./screens/About";
 import Route from "./components/Route";
 
-const Drawer = createDrawerNavigator();
-
 export default function App() {
-  return <Route />;
+  const [appIsReady, setAppisReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppisReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(
+    async () => {
+      if (appIsReady) {
+        await SplashScreen.hideAsync();
+      }
+    },
+    [appIsReady]
+  );
+
+  if (!appIsReady) {
+    return null;
+  }
+
+  return (
+    <View
+      style={{ flex: 1, backgroundColor: COLORS.primary }}
+      onLayout={onLayoutRootView}
+    >
+      <Route />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
