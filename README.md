@@ -1,4 +1,4 @@
-# MyToDoApp
+# MyToDoApp -  React Native Practice
 ---
 
 App screenshots
